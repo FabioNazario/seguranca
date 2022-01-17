@@ -26,8 +26,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 	@Autowired
 	UserRepository userRepository;
 	
-	
-	
 	public TokenAuthenticationFilter(ApplicationContext ctx) {
 		
 		this.tokenService = ctx.getBean(TokenService.class);
