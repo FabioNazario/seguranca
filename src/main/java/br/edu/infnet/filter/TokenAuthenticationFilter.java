@@ -12,24 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.edu.infnet.model.User;
-import br.edu.infnet.repository.UserRepository;
 import br.edu.infnet.service.TokenService;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter{
 
 	@Autowired
 	TokenService tokenService;
-	
-	@Autowired
-	UserRepository userRepository;
-	
+
 	public TokenAuthenticationFilter(ApplicationContext ctx) {
 		
 		this.tokenService = ctx.getBean(TokenService.class);
-		this.userRepository = ctx.getBean(UserRepository.class);
 	}
 
 	@Override
@@ -38,10 +34,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 	
 		String token = getToken(request);
 		if(this.tokenService.isValid(token)) {
-
-			Long userId = this.tokenService.getUserIdFromToken(token);
-			User user = userRepository.findById(userId).get();
 			
+			RestTemplate restTemplate = new RestTemplate();
+			
+			Long userId = this.tokenService.getUserIdFromToken(token);
+			User user = restTemplate.getForObject("http://localhost:8081/api/user/" + userId, User.class);
+			System.out.println("Usuario recuperado: " + user.getUsername());
 			UsernamePasswordAuthenticationToken auth = 
 					new UsernamePasswordAuthenticationToken(user, null, user.getPerfis());
 			

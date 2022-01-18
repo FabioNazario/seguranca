@@ -2,6 +2,7 @@ package br.edu.infnet.service;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class TokenService {
 	
-	private String secretKey = "2dfb811abb93f5644eaad865c4e466020a787d17d74b4f3c6ad2a07f8a7c796a";// TODO colocar no servidor de configuracao
+	@Value( "${microservice.jwt.secret}" )
+	private String secretKey;
 	
 	public String generateToken(Authentication auth) {
 		User user = (User) auth.getPrincipal();
