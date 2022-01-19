@@ -22,6 +22,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 
 	@Autowired
 	TokenService tokenService;
+	
+	@Autowired
+	RestTemplate restTemplate;
 
 	public TokenAuthenticationFilter(ApplicationContext ctx) {
 		
@@ -35,10 +38,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 		String token = getToken(request);
 		if(this.tokenService.isValid(token)) {
 			
-			RestTemplate restTemplate = new RestTemplate();
-			
 			Long userId = this.tokenService.getUserIdFromToken(token);
-			User user = restTemplate.getForObject("http://localhost:8081/api/user/" + userId, User.class);
+			User user = restTemplate.getForObject("http://USER/api/user/" + userId, User.class);
 			System.out.println("Usuario recuperado: " + user.getUsername());
 			UsernamePasswordAuthenticationToken auth = 
 					new UsernamePasswordAuthenticationToken(user, null, user.getPerfis());

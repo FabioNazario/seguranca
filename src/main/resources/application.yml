@@ -1,4 +1,4 @@
 server:  port: 8000
 spring:  application:    name: ${microservice.seguranca.application.name}  datasource:    url: ${microservice.seguranca.datasource.url}    driver-class-name: ${microservice.seguranca.datasource.driver-class-name}    username: ${microservice.seguranca.datasource.username}    password: ${microservice.seguranca.datasource.password}  jpa:    database-platform: ${microservice.seguranca.jpa.database-platform}    hibernate:      ddl-auto: create
   h2:
-    console:      enabled: true  config:    import: optional:configserver:http://localhost:8888    zipkin:    base-url: http://localhost:9411  sleuth:    sampler:      probability: 1.0eureka:  client:    service-url:      defaultZone: http://localhost:8761/eureka      logging:  config: ${microservice.log.config}      
+    console:      enabled: true  config:    import: optional:configserver:http://localhost:8888    zipkin:    base-url: http://localhost:9411  sleuth:    sampler:      probability: 1.0      eureka:  client:    service-url:      defaultZone: http://localhost:8761/eureka      logging:  config: ${microservice.log.config}      
