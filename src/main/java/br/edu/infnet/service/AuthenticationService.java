@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import br.edu.infnet.client.UserClient;
 import br.edu.infnet.model.User;
 
 @Service
@@ -16,12 +17,14 @@ public class AuthenticationService implements UserDetailsService{
 	
 	@Autowired
 	RestTemplate restTemplate;
+	
+	@Autowired
+	UserClient userClient;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-			ResponseEntity<User> user = restTemplate.exchange("http://USER/api/user/search?username=" + username, HttpMethod.GET, null, User.class);
-			return user.getBody();
+
+		return userClient.getByUsername(username);
 
 	}
 

@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import br.edu.infnet.client.UserClient;
 import br.edu.infnet.model.User;
 import br.edu.infnet.service.TokenService;
 
@@ -25,6 +26,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 	
 	@Autowired
 	RestTemplate restTemplate;
+	
+	@Autowired
+	UserClient userClient;
 
 	public TokenAuthenticationFilter(ApplicationContext ctx) {
 		
@@ -39,7 +43,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 		if(this.tokenService.isValid(token)) {
 			
 			Long userId = this.tokenService.getUserIdFromToken(token);
-			User user = restTemplate.getForObject("http://USER/api/user/" + userId, User.class);
+			//User user = restTemplate.getForObject("http://USER/api/user/" + userId, User.class);
+		    User user = userClient.getById(userId);
 			System.out.println("Usuario recuperado: " + user.getUsername());
 			UsernamePasswordAuthenticationToken auth = 
 					new UsernamePasswordAuthenticationToken(user, null, user.getPerfis());
