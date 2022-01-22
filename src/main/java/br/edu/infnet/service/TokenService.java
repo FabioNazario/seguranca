@@ -22,7 +22,7 @@ public class TokenService {
 		Date now = new Date();
 		Date exp = new Date((now.getTime()) + (6000*60*60));
 		
-		return Jwts.builder().setIssuer("VARIAVEL_AQUI?")
+		return Jwts.builder().setIssuer("Seguranca")
 		.setSubject(user.getId().toString())
 		.setIssuedAt(new Date())
 		.setExpiration(exp)

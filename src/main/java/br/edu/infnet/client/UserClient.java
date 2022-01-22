@@ -9,10 +9,10 @@ import br.edu.infnet.model.User;
 @FeignClient(name="USER")
 public interface UserClient {
 
-	@RequestMapping("/api/user/{id}")
+	@RequestMapping("/{id}")
 	User getById(@PathVariable Long id);
 	
-	@RequestMapping("/api/user/search?username={username}")
+	@RequestMapping("/search?username={username}")
 	User getByUsername(@PathVariable String username);
 	
 }

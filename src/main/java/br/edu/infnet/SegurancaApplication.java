@@ -13,12 +13,6 @@ import br.edu.infnet.client.UserClient;
 @EnableFeignClients
 public class SegurancaApplication {
 	
-	
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(SegurancaApplication.class, args);
 	}

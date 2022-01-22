@@ -43,7 +43,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().antMatchers(HttpMethod.POST, "/auth").permitAll()
+		http.authorizeHttpRequests()
+		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.antMatchers("/whoami").authenticated()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -1,6 +1,8 @@
 package br.edu.infnet.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -11,8 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class User implements UserDetails{
 	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -32,8 +39,13 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 		
-		return this.perfis;
+		for (Perfil perfil : perfis) {
+			list.add(new SimpleGrantedAuthority(perfil.getName()));
+		}
+
+		return list;
 	}
 
 	@Override
