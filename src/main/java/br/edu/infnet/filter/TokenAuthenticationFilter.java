@@ -1,7 +1,6 @@
 package br.edu.infnet.filter;
 
 import java.io.IOException;
-import java.security.Security;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.edu.infnet.client.UserClient;
@@ -49,16 +47,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 		    User user = userClient.getById(userId);
 			System.out.println("Usuario recuperado: " + user.getUsername());
 
-			
+			/*
 			Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 			for (Perfil perfil : user.getPerfis()) {
-				grantedAuthorities.add(new SimpleGrantedAuthority(perfil.getName()));
-			}
-			
-			
-			
+				grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + perfil.getName()));
+			}*/
+
 			UsernamePasswordAuthenticationToken auth = 
-					new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
+					new UsernamePasswordAuthenticationToken(user, null, user.getPerfis());
 			
 			System.out.println("Authorities ------------>" + auth.getAuthorities());
 			

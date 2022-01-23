@@ -16,9 +16,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -39,13 +36,13 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+		//List<SimpleGrantedAuthority GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 		
-		for (Perfil perfil : perfis) {
-			list.add(new SimpleGrantedAuthority(perfil.getName()));
-		}
+		//for (Perfil perfil : perfis) {
+		//	list.add(new SimpleGrantedAuthority("ROLE_" + perfil.getName()));
+		//}
 
-		return list;
+		return perfis;
 	}
 
 	@Override

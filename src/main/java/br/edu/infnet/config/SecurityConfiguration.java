@@ -46,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeHttpRequests()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.antMatchers("/whoami").authenticated()
+	    .antMatchers("/oba/**").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
