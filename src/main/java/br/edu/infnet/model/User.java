@@ -36,11 +36,6 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		//List<SimpleGrantedAuthority GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-		
-		//for (Perfil perfil : perfis) {
-		//	list.add(new SimpleGrantedAuthority("ROLE_" + perfil.getName()));
-		//}
 
 		return perfis;
 	}

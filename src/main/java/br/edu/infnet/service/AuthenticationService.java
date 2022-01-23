@@ -24,8 +24,6 @@ public class AuthenticationService implements UserDetailsService{
 			throw new UsernameNotFoundException("User not found.");
 		}
 		
-		System.out.println("athorities2 -----> " + user.getAuthorities());
-		
 		return user;
 
 	}

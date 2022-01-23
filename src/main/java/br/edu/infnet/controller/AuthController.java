@@ -2,6 +2,7 @@ package br.edu.infnet.controller;
 
 import java.util.HashSet;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,10 +50,15 @@ public class AuthController {
 	
 	@GetMapping("/whoami")
 	public ResponseEntity<UserDTO> whoami(@RequestHeader("Authorization") String token) {
-
-		Long userId = tokenService.getUserIdFromToken(token.substring(7));
-        UserDTO u =  userClient.getByIdWhoami(userId);
-		return new ResponseEntity<UserDTO>(u,HttpStatus.OK);
+		
+		try {
+			token = StringUtils.removeStart(token, "Bearer").trim();
+			Long userId = tokenService.getUserIdFromToken(token);
+	        UserDTO u =  userClient.getByIdWhoami(userId);
+			return new ResponseEntity<UserDTO>(u,HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
 	}
 	
 	

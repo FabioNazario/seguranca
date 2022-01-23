@@ -27,6 +27,7 @@ public class TokenService {
 		.setIssuedAt(new Date())
 		.setExpiration(exp)
 		.claim("user", user.getUsername())
+		.claim("roles", user.getPerfis())
 		.signWith(SignatureAlgorithm.HS256, secretKey).compact();
 		
 	}
