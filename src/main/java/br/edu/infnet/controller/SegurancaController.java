@@ -22,7 +22,7 @@ import br.edu.infnet.service.TokenService;
 
 @RestController
 @RequestMapping("/")
-public class AuthController {
+public class SegurancaController {
 	
 	@Autowired
 	TokenService tokenService;
